@@ -1,14 +1,10 @@
 # Startup script
 import requestposts
 
-def print_hi(name):
-    print(f'Hi, {name}!\n')
-    print('Disregardr starting up...')
-
 
 # Script entry point
 if __name__ == '__main__':
-    print_hi('user')
+    print('Starting Disregardr')
 
     # load user settings from config file
     print('Loading user settings...')
