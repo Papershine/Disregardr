@@ -1,4 +1,5 @@
 # Startup script
+import requestposts
 
 def print_hi(name):
     print(f'Hi, {name}!\n')
@@ -17,5 +18,6 @@ if __name__ == '__main__':
 
     # start post scanning
     print('Starting post scanning service')
+    requestposts.start_service()
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

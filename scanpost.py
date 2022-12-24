@@ -1,0 +1,2 @@
+def scan(json):
+    return
