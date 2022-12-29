@@ -29,10 +29,10 @@ class ChatClient:
         self.room.join()
         self.room.watch(on_message)
         print("[ChatScanner] Joined room %s on %s and listening!" % (room_id, host_id))
-        self.room.send_message("[ Disregardr ] started!")
+        self.send_message("started!")
 
     def send_message(self, message):
-        self.room.send_message(message)
+        self.room.send_message("[ [Disregardr](https://bit.ly/disregardr) ]" + message)
 
 
 def on_message(message, client):
