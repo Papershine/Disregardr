@@ -5,7 +5,7 @@ from sqlite3 import Error
 
 
 def add_scanned(post_id):
-    sql_insert_scanned_table = "INSERT INTO scanned(post_id) VALUES(%d);" % post_id
+    sql_insert_scanned_table = "INSERT INTO scanned(id) VALUES(%d);" % post_id
     try:
         c = globalvars.conn.cursor()
         c.execute(sql_insert_scanned_table)
@@ -17,10 +17,10 @@ def add_scanned(post_id):
 
 
 def is_scanned(post_id):
-    sql_search_scanned = "SELECT EXISTS(SELECT 1 FROM scanned WHERE post_id=%d)" % post_id
+    sql_search_scanned = "SELECT 1 FROM scanned WHERE id=%d" % post_id
     try:
         c = globalvars.conn.cursor()
-        if c.fetchone():
+        if c.execute(sql_search_scanned).fetchone():
             print("[DataService] post id found")
             return True
         else:
@@ -34,7 +34,7 @@ def is_scanned(post_id):
 # noinspection SqlNoDataSourceInspection
 def init():
     globalvars.conn = connect()
-    sql_create_scanned_table = """ CREATE TABLE IF NOT EXISTS scanned (post_id integer PRIMARY KEY); """
+    sql_create_scanned_table = """ CREATE TABLE IF NOT EXISTS scanned (id integer PRIMARY KEY); """
 
     try:
         c = globalvars.conn.cursor()
@@ -46,7 +46,7 @@ def init():
 def connect():
     conn = None
     try:
-        conn = sqlite3.connect('')
+        conn = sqlite3.connect("")
         print("[DataService] database connected")
         return conn
     except Error as e:

@@ -38,7 +38,6 @@ class ChatClient:
 def on_message(message, client):
     if not isinstance(message, chatexchange.events.MessagePosted):
         # Ignore non-message_posted events.
-        print("[ChatScanner] event: %r", message)
         return
 
     print("\n[ChatScanner] >> (%s) %s" % (message.user.name, message.content))

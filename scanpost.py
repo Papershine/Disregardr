@@ -40,14 +40,6 @@ def get_score(json):
         score += 10
         reasons.append('Downvoted')
 
-    # close vote count
-    if json['close_vote_count'] >= 2:
-        score += 20
-        reasons.append('Multiple close votes')
-    elif json['close_vote_count'] == 1:
-        score += 10
-        reasons.append('One close vote')
-
     # TODO: implement ML
 
     return score, reasons
