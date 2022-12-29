@@ -15,25 +15,25 @@ def run_request(scheduler):
               'sort': 'creation',
               'site': 'stackoverflow',
               'filter': '!FhcrK3mc6lnEuo(KA2NlM4T8zF'}
-    print('[PostRequester] Requesting URL ' + url)
+    print('[PostService] Requesting URL ' + url)
     r = requests.get(url, params=params)
     data = r.json()
 
     # handle response
-    print('[PostRequester] Request response ' + str(r.status_code))
+    print('[PostService] Request response ' + str(r.status_code))
     if r.status_code != 200:
-        print("[PostRequester][ERR] ERROR! Non 200 status code!")
-        print("[PostRequester][ERR] Error details: " + data['error_name'] + " " + str(data['error_id']))
+        print("[PostService][ERR] ERROR! Non 200 status code!")
+        print("[PostService][ERR] Error details: " + data['error_name'] + " " + str(data['error_id']))
         print(data['error_message'])
     quota = data['quota_remaining']
-    print('[PostRequester] Quota remaining ' + str(quota))
+    print('[PostService] Quota remaining ' + str(quota))
 
     # scan returned list of posts
     scanpost.scan(data['items'])  # TODO: address potential crash
 
     # deal with quota limit
     if quota <= 10:
-        print('[PostRequester][WARN] !! LOW QUOTA, BACKING OFF FOR 2 HOURS !!')
+        print('[PostService][WARN] !! LOW QUOTA, BACKING OFF FOR 2 HOURS !!')
         # TODO: send backoff to chat
         scheduler.enter(7200, 1, run_request, (scheduler,))
         return
@@ -41,7 +41,7 @@ def run_request(scheduler):
     # deal with backoff
     backoff = data.get('backoff', 0)
     if backoff >= 900:
-        print('[PostRequester][WARN] BACKOFF RECEIVED OF ' + str(backoff) + ' seconds')
+        print('[PostService][WARN] BACKOFF RECEIVED OF ' + str(backoff) + ' seconds')
         scheduler.enter(backoff, 1, run_request, (scheduler,))
         return
 

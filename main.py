@@ -1,22 +1,26 @@
 # Startup script
 import requestposts
 import atexit
-import chat
 import globalvars
+import data
+import chat
 
 
 def exit_cleanup():
-    print("Shutting down Disregardr...")
+    print("Closing resources...")
     globalvars.CHAT.client.logout()
+    data.close()
 
 
 # Script entry point
 if __name__ == '__main__':
     print('Starting Disregardr')
 
-    # load user settings from config file
-    print('Loading user settings...')
+    # load user settings from config file and database
+    print('Loading data...')
+    # TODO: load settings
     atexit.register(exit_cleanup)
+    data.init()
 
     # join chat room
     print('Joining chat room...')
