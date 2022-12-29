@@ -32,7 +32,7 @@ class ChatClient:
         self.send_message("started!")
 
     def send_message(self, message):
-        self.room.send_message("[ [Disregardr](https://bit.ly/disregardr) ]" + message)
+        self.room.send_message("[ [Disregardr](https://bit.ly/disregardr) ] " + message)
 
 
 def on_message(message, client):

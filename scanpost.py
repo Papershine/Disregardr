@@ -3,7 +3,7 @@ import globalvars
 
 
 def scan(json):
-    for post in json['items']:
+    for post in json:
         if data.is_scanned(post['question_id']):
             print("[PostScanner] post scanned previously, continuing")
         else:
@@ -11,7 +11,7 @@ def scan(json):
             score, reasons = get_score(post)
             if score >= 30:
                 print("[PostScanner] post exceeded threshold!")
-                r = " ,".join(reasons)
+                r = ", ".join(reasons)
                 response = "[Link](%s), **Score**: %d, **Reasons**: %s" % (post['link'], score, r)
                 globalvars.CHAT.send_message(response)
             else:
@@ -33,7 +33,7 @@ def get_score(json):
         reasons.append('Low view count')
 
     # negative score
-    if json['score'] <= 3:
+    if json['score'] <= -3:
         score += 20
         reasons.append('Highly downvoted')
     elif json['down_vote_count'] >= 0:

@@ -5,11 +5,10 @@ from sqlite3 import Error
 
 
 def add_scanned(post_id):
-    sql_insert_scanned_table = """INSERT INTO scanned (post_id) VALUES (?);"""
+    sql_insert_scanned_table = "INSERT INTO scanned(post_id) VALUES(%d);" % post_id
     try:
         c = globalvars.conn.cursor()
-        data = (post_id)
-        c.execute(sql_insert_scanned_table, data)
+        c.execute(sql_insert_scanned_table)
         globalvars.conn.commit()
         print("[DataService] post inserted into list")
         c.close()
@@ -18,14 +17,14 @@ def add_scanned(post_id):
 
 
 def is_scanned(post_id):
-    sql_search_scanned = "SELECT EXISTS (SELECT 1 FROM scanned WHERE post_id=%d" % post_id
+    sql_search_scanned = "SELECT EXISTS(SELECT 1 FROM scanned WHERE post_id=%d)" % post_id
     try:
         c = globalvars.conn.cursor()
-        c.execute(sql_search_scanned)
         if c.fetchone():
             print("[DataService] post id found")
             return True
         else:
+            print("[DataService] post id not found")
             return False
     except Error as e:
         print(e)
